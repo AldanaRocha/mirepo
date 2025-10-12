@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Categorías</h2>
+<a href="{% url 'categoria_crear' %}" class="btn btn-warning btn-sm"> <i class="fas fa-edit"></i> Nueva categoria</a>
+
+
+{% for categoria in object_list %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5>{{ categoria.nombre }}</h5>
+            <p>{{ categoria.descripcion }}</p>
+            
+            <!-- Botón eliminar DENTRO del loop -->
+            <form method="post" action="{% url 'categoria_eliminar' categoria.pk %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-sm" 
+                        onclick="return confirm('¿Eliminar {{ categoria.nombre }}?')">
+                    Eliminar
+                </button>
+            </form>
+
+             <a href="{% url 'categoria_editar' categoria.id %}" class="btn btn-warning btn-sm">
+                    <i class="fas fa-edit"></i> Editar
+                </a>
+        </div>
+    </div>
+{% endfor %}
+
+ 
+{% endblock %}
